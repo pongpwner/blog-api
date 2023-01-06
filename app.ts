@@ -3,11 +3,20 @@ import express, { Express, Request, Response, NextFunction } from "express";
 import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
-
+const mongoose = require("mongoose");
 import indexRouter from "./routes/index";
 import usersRouter from "./routes/users";
 import postsRouter from "./routes/posts";
+require("dotenv").config();
 
+console.log(process.env.DB_KEY);
+//set up database
+mongoose.connect(process.env.DB_KEY, {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+});
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "mongo connection error"));
 var app = express();
 
 // view engine setup

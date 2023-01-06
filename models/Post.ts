@@ -1,7 +1,8 @@
-import mongoose from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 const Schema = mongoose.Schema;
 
 export interface IPost {
+  _id?: ObjectId;
   title: string;
   content: string;
   timestamp: Date;
