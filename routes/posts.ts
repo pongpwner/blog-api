@@ -1,6 +1,6 @@
 import express from "express";
 var router = express.Router();
-import Post from "../models/Post";
+
 import {
   getPosts,
   createPost,
@@ -12,8 +12,8 @@ router.get("/", getPosts);
 
 router.post("/", createPost);
 
-router.get("/:id", getPost);
-router.put("/:id", updatePost);
-router.delete("/:id", deletePost);
+router.get("/:postId", getPost);
+router.put("/:postId", updatePost);
+router.delete("/:postId", deletePost);
 
 export default router;

@@ -36,7 +36,7 @@ export const getPost = function (
   res: Response,
   next: NextFunction
 ) {
-  Post.findById(req.params.id, (err: Error, result: IPost) => {
+  Post.findById(req.params.postId, (err: Error, result: IPost) => {
     if (err) return next(err);
     res.json({ post: result });
   });
@@ -47,7 +47,7 @@ export const deletePost = function (
   res: Response,
   next: NextFunction
 ) {
-  Post.findByIdAndDelete(req.params.id, (err: Error) => {
+  Post.findByIdAndDelete(req.params.postId, (err: Error) => {
     if (err) return next(err);
     res.json({ message: "post deleted" });
   });
@@ -58,13 +58,11 @@ export const updatePost = function (
   next: NextFunction
 ) {
   Post.findByIdAndUpdate(
-    req.params.id,
+    req.params.postId,
     { title: req.body.title, content: req.body.content },
     (err: Error, result: IPost) => {
       if (err) return next(err);
       res.json({ message: result });
     }
   );
-  //req.params.id
-  //implement
 };
