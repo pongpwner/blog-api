@@ -1,4 +1,5 @@
 import express from "express";
+import passport from "passport";
 var router = express.Router();
 
 import {
@@ -10,10 +11,18 @@ import {
 } from "../controllers/postsController";
 router.get("/", getPosts);
 
-router.post("/", createPost);
+router.post("/", passport.authenticate("jwt", { session: false }), createPost);
 
 router.get("/:postId", getPost);
-router.put("/:postId", updatePost);
-router.delete("/:postId", deletePost);
+router.put(
+  "/:postId",
+  passport.authenticate("jwt", { session: false }),
+  updatePost
+);
+router.delete(
+  "/:postId",
+  passport.authenticate("jwt", { session: false }),
+  deletePost
+);
 
 export default router;

@@ -8,6 +8,14 @@ import indexRouter from "./routes/index";
 import usersRouter from "./routes/users";
 import postsRouter from "./routes/posts";
 import commentsRouter from "./routes/posts";
+import signInRouter from "./routes/sign-in";
+import passport from "passport";
+const LocalStrategy = require("passport-local").Strategy;
+const bcrypt = require("bcrypt");
+var JwtStrategy = require("passport-jwt").Strategy,
+  ExtractJwt = require("passport-jwt").ExtractJwt;
+import User, { IUser } from "./models/User";
+import { StrategyOptions, VerifiedCallback } from "passport-jwt";
 require("dotenv").config();
 
 console.log(process.env.DB_KEY);
@@ -30,10 +38,36 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+// jwt setup
+
+var opts: StrategyOptions = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: "secret",
+  issuer: "accounts.examplesoft.com",
+  audience: "yoursite.net",
+};
+
+passport.use(
+  new JwtStrategy(opts, function (jwt_payload: any, done: VerifiedCallback) {
+    User.findOne({ id: jwt_payload.sub }, function (err: Error, user: IUser) {
+      if (err) {
+        return done(err, false);
+      }
+      if (user) {
+        return done(null, user);
+      } else {
+        return done(null, false);
+        // or you could create a new account
+      }
+    });
+  })
+);
+//
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
 app.use("/posts/:postId/comments", commentsRouter);
+app.use("/sign-in", signInRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

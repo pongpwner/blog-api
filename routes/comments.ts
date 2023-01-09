@@ -1,5 +1,6 @@
 import express from "express";
 var router = express.Router();
+import passport from "passport";
 import Comment, { IComment } from "../models/Comment";
 import {
   getPostComments,
@@ -12,6 +13,10 @@ router.get("/", getPostComments);
 router.post("/", createComment);
 
 router.get("/:commentId", getComment);
-router.delete("/:commentId", deleteComment);
+router.delete(
+  "/:commentId",
+  passport.authenticate("jwt", { session: false }),
+  deleteComment
+);
 
 export default router;
