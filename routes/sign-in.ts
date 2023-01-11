@@ -9,8 +9,8 @@ router.post("/", function (req: Request, res: Response, next: NextFunction) {
   passport.authenticate(
     "local",
     {
-      successRedirect: "/",
-      failureRedirect: "/login",
+      // successRedirect: "/",
+      // failureRedirect: "/login",
       session: false,
     },
     (err, user, info) => {

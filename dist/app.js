@@ -12,6 +12,15 @@ const mongoose = require("mongoose");
 const index_1 = __importDefault(require("./routes/index"));
 const users_1 = __importDefault(require("./routes/users"));
 const posts_1 = __importDefault(require("./routes/posts"));
+const posts_2 = __importDefault(require("./routes/posts"));
+const sign_in_1 = __importDefault(require("./routes/sign-in"));
+const sign_up_1 = __importDefault(require("./routes/sign-up"));
+const passport_1 = __importDefault(require("passport"));
+var cors = require("cors");
+const LocalStrategy = require("passport-local").Strategy;
+const bcrypt = require("bcrypt");
+var JwtStrategy = require("passport-jwt").Strategy, ExtractJwt = require("passport-jwt").ExtractJwt;
+const User_1 = require("./models/User");
 require("dotenv").config();
 console.log(process.env.DB_KEY);
 //set up database
@@ -30,9 +39,40 @@ app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.static(path_1.default.join(__dirname, "public")));
+// jwt setup
+var opts = {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: "secret",
+    // issuer: "accounts.examplesoft.com",
+    // audience: "yoursite.net",
+};
+passport_1.default.use(new JwtStrategy(opts, function (jwt_payload, done) {
+    User_1.User.findOne({ id: jwt_payload.sub }, function (err, user) {
+        if (err) {
+            return done(err, false);
+        }
+        if (user) {
+            return done(null, user);
+        }
+        else {
+            return done(null, false);
+            // or you could create a new account
+        }
+    });
+}));
+//
 app.use("/", index_1.default);
 app.use("/users", users_1.default);
 app.use("/posts", posts_1.default);
+app.use("/posts/:postId/comments", posts_2.default);
+app.use("/sign-in", sign_in_1.default);
+app.use("/sign-up", sign_up_1.default);
+// app.use(
+//   cors({
+//     origin: "http://localhost:3000",
+//     credentials: true,
+//   })
+// );
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     next((0, http_errors_1.default)(404));

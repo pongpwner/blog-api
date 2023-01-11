@@ -29,7 +29,7 @@ const createPost = function (req, res, next) {
 exports.createPost = createPost;
 //
 const getPost = function (req, res, next) {
-    Post_1.default.findById(req.params.id, (err, result) => {
+    Post_1.default.findById(req.params.postId, (err, result) => {
         if (err)
             return next(err);
         res.json({ post: result });
@@ -38,7 +38,7 @@ const getPost = function (req, res, next) {
 };
 exports.getPost = getPost;
 const deletePost = function (req, res, next) {
-    Post_1.default.findByIdAndDelete(req.params.id, (err) => {
+    Post_1.default.findByIdAndDelete(req.params.postId, (err) => {
         if (err)
             return next(err);
         res.json({ message: "post deleted" });
@@ -46,12 +46,10 @@ const deletePost = function (req, res, next) {
 };
 exports.deletePost = deletePost;
 const updatePost = function (req, res, next) {
-    Post_1.default.findByIdAndUpdate(req.params.id, { title: req.body.title, content: req.body.content }, (err, result) => {
+    Post_1.default.findByIdAndUpdate(req.params.postId, { title: req.body.title, content: req.body.content }, (err, result) => {
         if (err)
             return next(err);
         res.json({ message: result });
     });
-    //req.params.id
-    //implement
 };
 exports.updatePost = updatePost;

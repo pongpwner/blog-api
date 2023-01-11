@@ -8,7 +8,7 @@ const Schema = mongoose_1.default.Schema;
 const PostSchema = new Schema({
     title: { type: String, required: true },
     content: { type: String, required: true },
-    timestamp: { type: Date, required: true },
-    published: { type: Boolean, required: true },
+    timestamp: { type: Date, default: Date.now() },
+    published: { type: Boolean, default: false },
 });
 exports.default = mongoose_1.default.model("post", PostSchema);

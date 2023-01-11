@@ -8,5 +8,11 @@ const Schema = mongoose_1.default.Schema;
 const CommentSchema = new Schema({
     author: { type: String, required: true },
     content: { type: String, required: true },
+    timestamp: { type: Date, default: Date.now() },
+    postId: {
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        required: true,
+        ref: "posts",
+    },
 });
 exports.default = mongoose_1.default.model("comment", CommentSchema);

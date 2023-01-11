@@ -9,12 +9,14 @@ import usersRouter from "./routes/users";
 import postsRouter from "./routes/posts";
 import commentsRouter from "./routes/posts";
 import signInRouter from "./routes/sign-in";
+import signUpRouter from "./routes/sign-up";
 import passport from "passport";
+var cors = require("cors");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
 var JwtStrategy = require("passport-jwt").Strategy,
   ExtractJwt = require("passport-jwt").ExtractJwt;
-import User, { IUser } from "./models/User";
+import { User, IUser } from "./models/User";
 import { StrategyOptions, VerifiedCallback } from "passport-jwt";
 require("dotenv").config();
 
@@ -43,8 +45,8 @@ app.use(express.static(path.join(__dirname, "public")));
 var opts: StrategyOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: "secret",
-  issuer: "accounts.examplesoft.com",
-  audience: "yoursite.net",
+  // issuer: "accounts.examplesoft.com",
+  // audience: "yoursite.net",
 };
 
 passport.use(
@@ -68,6 +70,14 @@ app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
 app.use("/posts/:postId/comments", commentsRouter);
 app.use("/sign-in", signInRouter);
+app.use("/sign-up", signUpRouter);
+
+// app.use(
+//   cors({
+//     origin: "http://localhost:3000",
+//     credentials: true,
+//   })
+// );
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

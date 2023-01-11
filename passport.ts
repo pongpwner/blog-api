@@ -2,7 +2,7 @@
 const bcrypt = require("bcrypt");
 import passport from "passport";
 const LocalStrategy = require("passport-local").Strategy;
-import User, { IUser } from "./models/User";
+import { User, IUser } from "./models/User";
 //runs on login
 interface IPassportUser {
   id?: string;
