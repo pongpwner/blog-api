@@ -6,6 +6,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.post("/", function (req: Request, res: Response, next: NextFunction) {
+  console.log("try to sign in");
   passport.authenticate(
     "local",
     {
@@ -20,13 +21,17 @@ router.post("/", function (req: Request, res: Response, next: NextFunction) {
           user: user,
         });
       }
+      console.log("1");
       req.login(user, { session: false }, (err) => {
         if (err) {
           res.send(err);
         }
+        console.log("2");
         // generate a signed son web token with the contents of user object and return it in the response
 
-        const token = jwt.sign(user, "secret");
+        const token = jwt.sign(user.toJSON(), "secret", {
+          expiresIn: "1d",
+        });
         return res.json({ user, token });
       });
     }

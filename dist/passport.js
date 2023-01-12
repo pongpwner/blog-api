@@ -24,6 +24,7 @@ passport_1.default.deserializeUser((id, done) => {
 // passprt.authenticate calls this callback
 //done calls serializeUser
 passport_1.default.use(new LocalStrategy(function verify(username, password, done) {
+    console.log("verify");
     User_1.User.findOne({ username: username }, (err, user) => {
         if (err) {
             return done(err);
@@ -34,6 +35,7 @@ passport_1.default.use(new LocalStrategy(function verify(username, password, don
         bcrypt.compare(password, user.password, (err, res) => {
             if (res) {
                 // passwords match! log user in
+                console.log("user log in from verify");
                 return done(null, user);
             }
             else {

@@ -47,6 +47,7 @@ var opts = {
     // audience: "yoursite.net",
 };
 passport_1.default.use(new JwtStrategy(opts, function (jwt_payload, done) {
+    console.log("jwt");
     User_1.User.findOne({ id: jwt_payload.sub }, function (err, user) {
         if (err) {
             return done(err, false);
@@ -60,6 +61,46 @@ passport_1.default.use(new JwtStrategy(opts, function (jwt_payload, done) {
         }
     });
 }));
+passport_1.default.serializeUser((user, done) => {
+    return done(null, user.id);
+});
+//current problem is this is not being called
+passport_1.default.deserializeUser((id, done) => {
+    User_1.User.findById(id, function (err, user) {
+        if (err) {
+            return done(err);
+        }
+        //assigns user to req.user
+        done(null, user);
+    });
+});
+// passprt.authenticate calls this callback
+//done calls serializeUser
+passport_1.default.use(new LocalStrategy(function verify(username, password, done) {
+    console.log("verify");
+    User_1.User.findOne({ username: username }, (err, user) => {
+        if (err) {
+            return done(err);
+        }
+        if (!user) {
+            return done(null, false, { message: "Incorrect username" });
+        }
+        bcrypt.compare(password, user.password, (err, res) => {
+            if (res) {
+                // passwords match! log user in
+                console.log("user log in from verify");
+                return done(null, user);
+            }
+            else {
+                // passwords do not match!
+                return done(null, false, { message: "Incorrect password" });
+            }
+        });
+    });
+}));
+app.use(passport_1.default.initialize());
+// app.use(passport.session());
+// app.use(passport.authenticate("session"));
 //
 app.use("/", index_1.default);
 app.use("/users", users_1.default);

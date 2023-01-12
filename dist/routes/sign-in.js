@@ -9,6 +9,7 @@ const passport_1 = __importDefault(require("passport"));
 var router = express_1.default.Router();
 /* GET home page. */
 router.post("/", function (req, res, next) {
+    console.log("try to sign in");
     passport_1.default.authenticate("local", {
         // successRedirect: "/",
         // failureRedirect: "/login",
@@ -20,12 +21,16 @@ router.post("/", function (req, res, next) {
                 user: user,
             });
         }
+        console.log("1");
         req.login(user, { session: false }, (err) => {
             if (err) {
                 res.send(err);
             }
+            console.log("2");
             // generate a signed son web token with the contents of user object and return it in the response
-            const token = jsonwebtoken_1.default.sign(user, "secret");
+            const token = jsonwebtoken_1.default.sign(user.toJSON(), "secret", {
+                expiresIn: "1d",
+            });
             return res.json({ user, token });
         });
     })(req, res);

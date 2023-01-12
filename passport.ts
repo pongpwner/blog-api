@@ -31,6 +31,7 @@ passport.use(
     password: string,
     done: Function
   ) {
+    console.log("verify");
     User.findOne({ username: username }, (err: Error, user: IUser) => {
       if (err) {
         return done(err);
@@ -42,7 +43,7 @@ passport.use(
       bcrypt.compare(password, user.password, (err: Error, res: Object) => {
         if (res) {
           // passwords match! log user in
-
+          console.log("user log in from verify");
           return done(null, user);
         } else {
           // passwords do not match!
