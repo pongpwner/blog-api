@@ -51,7 +51,7 @@ var opts: StrategyOptions = {
 
 passport.use(
   new JwtStrategy(opts, function (jwt_payload: any, done: VerifiedCallback) {
-    console.log("jwt");
+    console.log("jwgitt");
     User.findOne({ id: jwt_payload.sub }, function (err: Error, user: IUser) {
       if (err) {
         return done(err, false);
@@ -122,19 +122,24 @@ app.use(passport.initialize());
 
 // app.use(passport.authenticate("session"));
 //
+//set cors header
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
+app.use(function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  next();
+});
+
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
 app.use("/posts/:postId/comments", commentsRouter);
 app.use("/sign-in", signInRouter);
 app.use("/sign-up", signUpRouter);
-
-// app.use(
-//   cors({
-//     origin: "http://localhost:3000",
-//     credentials: true,
-//   })
-// );
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -32,6 +32,7 @@ router.post("/", function (req: Request, res: Response, next: NextFunction) {
         const token = jwt.sign(user.toJSON(), "secret", {
           expiresIn: "1d",
         });
+
         return res.json({ user, token });
       });
     }

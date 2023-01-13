@@ -47,7 +47,7 @@ var opts = {
     // audience: "yoursite.net",
 };
 passport_1.default.use(new JwtStrategy(opts, function (jwt_payload, done) {
-    console.log("jwt");
+    console.log("jwgitt");
     User_1.User.findOne({ id: jwt_payload.sub }, function (err, user) {
         if (err) {
             return done(err, false);
@@ -102,18 +102,21 @@ app.use(passport_1.default.initialize());
 // app.use(passport.session());
 // app.use(passport.authenticate("session"));
 //
+//set cors header
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+}));
+app.use(function (req, res, next) {
+    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+    next();
+});
 app.use("/", index_1.default);
 app.use("/users", users_1.default);
 app.use("/posts", posts_1.default);
 app.use("/posts/:postId/comments", posts_2.default);
 app.use("/sign-in", sign_in_1.default);
 app.use("/sign-up", sign_up_1.default);
-// app.use(
-//   cors({
-//     origin: "http://localhost:3000",
-//     credentials: true,
-//   })
-// );
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     next((0, http_errors_1.default)(404));
