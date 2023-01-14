@@ -16,13 +16,16 @@ export const createComment = async function (
   res: Response,
   next: NextFunction
 ) {
+  console.log("trying to create comment");
   let currentPostId = req.params.postId;
   let newComment = new Comment({
     author: req.body.author,
     content: req.body.content,
     postId: currentPostId,
   });
+  console.log("comment created");
   await newComment.save();
+  console.log("comment saved");
   res.json({ comment: newComment });
 };
 

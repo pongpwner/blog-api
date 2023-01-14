@@ -15,6 +15,7 @@ const posts_1 = __importDefault(require("./routes/posts"));
 const posts_2 = __importDefault(require("./routes/posts"));
 const sign_in_1 = __importDefault(require("./routes/sign-in"));
 const sign_up_1 = __importDefault(require("./routes/sign-up"));
+const dashboard_1 = __importDefault(require("./routes/dashboard"));
 const passport_1 = __importDefault(require("passport"));
 var cors = require("cors");
 const LocalStrategy = require("passport-local").Strategy;
@@ -111,12 +112,14 @@ app.use(function (req, res, next) {
     res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
     next();
 });
+//routes
 app.use("/", index_1.default);
 app.use("/users", users_1.default);
 app.use("/posts", posts_1.default);
 app.use("/posts/:postId/comments", posts_2.default);
 app.use("/sign-in", sign_in_1.default);
 app.use("/sign-up", sign_up_1.default);
+app.use("/dashboard", dashboard_1.default);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     next((0, http_errors_1.default)(404));

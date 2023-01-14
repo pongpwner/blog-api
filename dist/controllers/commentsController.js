@@ -24,13 +24,16 @@ const getPostComments = function (req, res, next) {
 exports.getPostComments = getPostComments;
 const createComment = function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log("trying to create comment");
         let currentPostId = req.params.postId;
         let newComment = new Comment_1.default({
             author: req.body.author,
             content: req.body.content,
             postId: currentPostId,
         });
+        console.log("comment created");
         yield newComment.save();
+        console.log("comment saved");
         res.json({ comment: newComment });
     });
 };

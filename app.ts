@@ -10,6 +10,7 @@ import postsRouter from "./routes/posts";
 import commentsRouter from "./routes/posts";
 import signInRouter from "./routes/sign-in";
 import signUpRouter from "./routes/sign-up";
+import dashboardRouter from "./routes/dashboard";
 import passport from "passport";
 var cors = require("cors");
 const LocalStrategy = require("passport-local").Strategy;
@@ -134,12 +135,14 @@ app.use(function (req, res, next) {
   next();
 });
 
+//routes
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
 app.use("/posts/:postId/comments", commentsRouter);
 app.use("/sign-in", signInRouter);
 app.use("/sign-up", signUpRouter);
+app.use("/dashboard", dashboardRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
