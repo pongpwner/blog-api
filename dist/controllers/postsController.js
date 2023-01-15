@@ -14,6 +14,7 @@ const getPosts = function (req, res, next) {
 };
 exports.getPosts = getPosts;
 const createPost = function (req, res, next) {
+    console.log(req.body);
     let newPost = new Post_1.default({
         title: req.body.title,
         content: req.body.content,

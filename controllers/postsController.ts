@@ -18,6 +18,7 @@ export const createPost = function (
   res: Response,
   next: NextFunction
 ) {
+  console.log(req.body);
   let newPost = new Post({
     title: req.body.title,
     content: req.body.content,

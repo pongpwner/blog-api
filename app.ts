@@ -52,14 +52,17 @@ var opts: StrategyOptions = {
 
 passport.use(
   new JwtStrategy(opts, function (jwt_payload: any, done: VerifiedCallback) {
-    console.log("jwgitt");
+    console.log("passprt jwt");
     User.findOne({ id: jwt_payload.sub }, function (err: Error, user: IUser) {
       if (err) {
+        console.log("1");
         return done(err, false);
       }
       if (user) {
+        console.log("success");
         return done(null, user);
       } else {
+        console.log("3");
         return done(null, false);
         // or you could create a new account
       }
