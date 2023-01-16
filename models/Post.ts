@@ -15,7 +15,7 @@ const PostSchema = new Schema<IPost>({
   title: { type: String, required: true },
   content: { type: String, required: true },
   timestamp: { type: Date, default: Date.now() },
-  published: { type: Boolean, default: false },
+  published: { type: Boolean },
 });
 
 export default mongoose.model<IPost>("post", PostSchema);

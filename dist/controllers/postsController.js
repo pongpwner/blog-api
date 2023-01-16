@@ -47,7 +47,15 @@ const deletePost = function (req, res, next) {
 };
 exports.deletePost = deletePost;
 const updatePost = function (req, res, next) {
-    Post_1.default.findByIdAndUpdate(req.params.postId, { title: req.body.title, content: req.body.content }, (err, result) => {
+    console.log(req.body);
+    //if updating published
+    console.log("update comment content");
+    //if updating post content
+    Post_1.default.findByIdAndUpdate(req.params.postId, {
+        title: req.body.title,
+        content: req.body.content,
+        published: req.body.published,
+    }, (err, result) => {
         if (err)
             return next(err);
         res.json({ message: result });
