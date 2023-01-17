@@ -30,6 +30,7 @@ const createComment = function (req, res, next) {
             author: req.body.author,
             content: req.body.content,
             postId: currentPostId,
+            timestamp: new Date(),
         });
         console.log("comment created");
         yield newComment.save();

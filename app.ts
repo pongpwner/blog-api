@@ -7,7 +7,6 @@ const mongoose = require("mongoose");
 import indexRouter from "./routes/index";
 import usersRouter from "./routes/users";
 import postsRouter from "./routes/posts";
-import commentsRouter from "./routes/posts";
 import signInRouter from "./routes/sign-in";
 import signUpRouter from "./routes/sign-up";
 import dashboardRouter from "./routes/dashboard";
@@ -142,7 +141,7 @@ app.use(function (req, res, next) {
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
-app.use("/posts/:postId/comments", commentsRouter);
+//app.use("/posts/:postId/comments", commentsRouter);
 app.use("/sign-in", signInRouter);
 app.use("/sign-up", signUpRouter);
 app.use("/dashboard", dashboardRouter);

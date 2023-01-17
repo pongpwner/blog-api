@@ -22,6 +22,7 @@ export const createComment = async function (
     author: req.body.author,
     content: req.body.content,
     postId: currentPostId,
+    timestamp: new Date(),
   });
   console.log("comment created");
   await newComment.save();

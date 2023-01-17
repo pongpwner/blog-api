@@ -12,7 +12,6 @@ const mongoose = require("mongoose");
 const index_1 = __importDefault(require("./routes/index"));
 const users_1 = __importDefault(require("./routes/users"));
 const posts_1 = __importDefault(require("./routes/posts"));
-const posts_2 = __importDefault(require("./routes/posts"));
 const sign_in_1 = __importDefault(require("./routes/sign-in"));
 const sign_up_1 = __importDefault(require("./routes/sign-up"));
 const dashboard_1 = __importDefault(require("./routes/dashboard"));
@@ -119,7 +118,7 @@ app.use(function (req, res, next) {
 app.use("/", index_1.default);
 app.use("/users", users_1.default);
 app.use("/posts", posts_1.default);
-app.use("/posts/:postId/comments", posts_2.default);
+//app.use("/posts/:postId/comments", commentsRouter);
 app.use("/sign-in", sign_in_1.default);
 app.use("/sign-up", sign_up_1.default);
 app.use("/dashboard", dashboard_1.default);

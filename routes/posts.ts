@@ -9,6 +9,13 @@ import {
   deletePost,
   updatePost,
 } from "../controllers/postsController";
+
+import {
+  getPostComments,
+  createComment,
+  getComment,
+  deleteComment,
+} from "../controllers/commentsController";
 router.get("/", getPosts);
 
 router.post("/", passport.authenticate("jwt", { session: false }), createPost);
@@ -24,5 +31,22 @@ router.delete(
   passport.authenticate("jwt", { session: false }),
   deletePost
 );
+//comments
 
+router.get("/:postId/comments", getPostComments);
+router.post(
+  "/:postId/comments",
+  (req, res, next) => {
+    console.log("comment");
+    next();
+  },
+  createComment
+);
+
+router.get("/:postId/comments/:commentId", getComment);
+router.delete(
+  "/:postId/comments/:commentId",
+  passport.authenticate("jwt", { session: false }),
+  deleteComment
+);
 export default router;
