@@ -34,14 +34,7 @@ router.delete(
 //comments
 
 router.get("/:postId/comments", getPostComments);
-router.post(
-  "/:postId/comments",
-  (req, res, next) => {
-    console.log("comment");
-    next();
-  },
-  createComment
-);
+router.post("/:postId/comments", createComment);
 
 router.get("/:postId/comments/:commentId", getComment);
 router.delete(

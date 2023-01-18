@@ -15,10 +15,7 @@ router.put("/:postId", passport_1.default.authenticate("jwt", { session: false }
 router.delete("/:postId", passport_1.default.authenticate("jwt", { session: false }), postsController_1.deletePost);
 //comments
 router.get("/:postId/comments", commentsController_1.getPostComments);
-router.post("/:postId/comments", (req, res, next) => {
-    console.log("comment");
-    next();
-}, commentsController_1.createComment);
+router.post("/:postId/comments", commentsController_1.createComment);
 router.get("/:postId/comments/:commentId", commentsController_1.getComment);
 router.delete("/:postId/comments/:commentId", passport_1.default.authenticate("jwt", { session: false }), commentsController_1.deleteComment);
 exports.default = router;
