@@ -18,7 +18,6 @@ import { User, IUser } from "./models/User";
 import { StrategyOptions, VerifiedCallback } from "passport-jwt";
 require("dotenv").config();
 
-console.log(process.env.DB_KEY);
 //set up database
 mongoose.connect(process.env.DB_KEY, {
   useUnifiedTopology: true,
@@ -123,7 +122,7 @@ app.use(
   })
 );
 app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Origin", process.env.CORS!);
   next();
 });
 

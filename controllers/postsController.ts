@@ -30,7 +30,7 @@ export const createPost = [
       //validation errors
       res.json({ message: "failed to create post", errors: errors });
     } else {
-      console.log(req.body);
+      //no validation errors
       let newPost = new Post({
         title: req.body.title,
         content: req.body.content,
@@ -55,7 +55,6 @@ export const getPost = function (
     if (err) return next(err);
     res.json({ post: result });
   });
-  //implement
 };
 export const deletePost = function (
   req: Request,
@@ -85,11 +84,7 @@ export const updatePost = [
       res.json({ message: "failed to update post", errors: errors });
     } else {
       //no validation errors
-      console.log(req.body);
-      //if updating published
 
-      console.log("update comment content");
-      //if updating post content
       Post.findByIdAndUpdate(
         req.params.postId,
         {
