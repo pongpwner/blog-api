@@ -19,7 +19,7 @@ var JwtStrategy = require("passport-jwt").Strategy,
   ExtractJwt = require("passport-jwt").ExtractJwt;
 import { User, IUser } from "./models/User";
 import { StrategyOptions, VerifiedCallback } from "passport-jwt";
-require("dotenv").config();
+require("dotenv").config({ path: __dirname + "/../.env" });
 
 //set up database
 mongoose.connect(process.env.DB_KEY, {
