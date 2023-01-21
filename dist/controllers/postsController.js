@@ -32,7 +32,7 @@ exports.createPost = [
             res.json({ message: "failed to create post", errors: errors });
         }
         else {
-            console.log(req.body);
+            //no validation errors
             let newPost = new Post_1.default({
                 title: req.body.title,
                 content: req.body.content,
@@ -54,7 +54,6 @@ const getPost = function (req, res, next) {
             return next(err);
         res.json({ post: result });
     });
-    //implement
 };
 exports.getPost = getPost;
 const deletePost = function (req, res, next) {
@@ -84,10 +83,6 @@ exports.updatePost = [
         }
         else {
             //no validation errors
-            console.log(req.body);
-            //if updating published
-            console.log("update comment content");
-            //if updating post content
             Post_1.default.findByIdAndUpdate(req.params.postId, {
                 title: req.body.title,
                 content: req.body.content,

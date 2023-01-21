@@ -9,6 +9,8 @@ const path_1 = __importDefault(require("path"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const morgan_1 = __importDefault(require("morgan"));
 const mongoose = require("mongoose");
+const compression = require("compression");
+const helmet = require("helmet");
 const posts_1 = __importDefault(require("./routes/posts"));
 const sign_in_1 = __importDefault(require("./routes/sign-in"));
 const sign_up_1 = __importDefault(require("./routes/sign-up"));
@@ -19,8 +21,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
 var JwtStrategy = require("passport-jwt").Strategy, ExtractJwt = require("passport-jwt").ExtractJwt;
 const User_1 = require("./models/User");
-require("dotenv").config();
-console.log(process.env.DB_KEY);
+require("dotenv").config({ path: __dirname + "/../.env" });
 //set up database
 mongoose.connect(process.env.DB_KEY, {
     useUnifiedTopology: true,
@@ -29,6 +30,8 @@ mongoose.connect(process.env.DB_KEY, {
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
 var app = (0, express_1.default)();
+//protection against common vulnerabilities
+app.use(helmet());
 // view engine setup
 app.set("views", path_1.default.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -101,10 +104,11 @@ app.use(cors({
     credentials: true,
 }));
 app.use(function (req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.setHeader("Access-Control-Allow-Origin", process.env.CORS);
     next();
 });
 //routes
+app.use(compression()); // Compress all routes
 app.use("/posts", posts_1.default);
 app.use("/sign-in", sign_in_1.default);
 app.use("/sign-up", sign_up_1.default);

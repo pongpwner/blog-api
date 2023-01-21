@@ -45,22 +45,3 @@ passport_1.default.use(new LocalStrategy(function verify(username, password, don
         });
     });
 }));
-//set up session
-// app.use(
-//   session({
-//     secret: "pong",
-//     resave: false,
-//     saveUninitialized: false,
-//     store: MongoStore.create({ mongoUrl: mongoDB }),
-//     cookie: {
-//       expires: 60 * 60 * 24 * 1000,
-//     },
-//   })
-// );
-//checks if current session has req.session.passport, if so saves user id onto it
-//app.use(passport.initialize());
-//calls passport authenticator,
-//1. Takes the MongoDB user ID obtained from the `passport.initialize()` method (run directly before) and passes it to the `passport.deserializeUser()` function (defined above in this module).  The `passport.deserializeUser()`
-//If the `passport.deserializeUser()` returns a user object, this user object is assigned to the `req.user` property
-// app.use(passport.session());
-// app.use(passport.authenticate("session"));

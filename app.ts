@@ -4,7 +4,6 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 const mongoose = require("mongoose");
-const catalogRouter = require("./routes/catalog"); // Import routes for "catalog" area of site
 const compression = require("compression");
 const helmet = require("helmet");
 import postsRouter from "./routes/posts";
