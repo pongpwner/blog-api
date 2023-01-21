@@ -20,13 +20,9 @@ router.post(
       res.json({ message: "login failed", errors: errors });
     } else {
       //no errors
-
-      console.log("try to sign in");
       passport.authenticate(
         "local",
         {
-          // successRedirect: "/",
-          // failureRedirect: "/login",
           session: false,
         },
         (err, user, info) => {
@@ -36,12 +32,12 @@ router.post(
               user: user,
             });
           }
-          console.log("1");
+
           req.login(user, { session: false }, (err) => {
             if (err) {
               res.send(err);
             }
-            console.log("2");
+
             // generate a signed son web token with the contents of user object and return it in the response
 
             const token = jwt.sign(user.toJSON(), "secret", {

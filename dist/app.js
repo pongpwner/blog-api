@@ -9,8 +9,6 @@ const path_1 = __importDefault(require("path"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const morgan_1 = __importDefault(require("morgan"));
 const mongoose = require("mongoose");
-const index_1 = __importDefault(require("./routes/index"));
-const users_1 = __importDefault(require("./routes/users"));
 const posts_1 = __importDefault(require("./routes/posts"));
 const sign_in_1 = __importDefault(require("./routes/sign-in"));
 const sign_up_1 = __importDefault(require("./routes/sign-up"));
@@ -43,22 +41,19 @@ app.use(express_1.default.static(path_1.default.join(__dirname, "public")));
 var opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: "secret",
-    // issuer: "accounts.examplesoft.com",
-    // audience: "yoursite.net",
 };
 passport_1.default.use(new JwtStrategy(opts, function (jwt_payload, done) {
-    console.log("passprt jwt");
     User_1.User.findOne({ id: jwt_payload.sub }, function (err, user) {
         if (err) {
-            console.log("1");
+            //error
             return done(err, false);
         }
         if (user) {
-            console.log("success");
+            // found user
             return done(null, user);
         }
         else {
-            console.log("3");
+            //no user found
             return done(null, false);
             // or you could create a new account
         }
@@ -80,7 +75,6 @@ passport_1.default.deserializeUser((id, done) => {
 // passprt.authenticate calls this callback
 //done calls serializeUser
 passport_1.default.use(new LocalStrategy(function verify(username, password, done) {
-    console.log("verify");
     User_1.User.findOne({ username: username }, (err, user) => {
         if (err) {
             return done(err);
@@ -91,7 +85,6 @@ passport_1.default.use(new LocalStrategy(function verify(username, password, don
         bcrypt.compare(password, user.password, (err, res) => {
             if (res) {
                 // passwords match! log user in
-                console.log("user log in from verify");
                 return done(null, user);
             }
             else {
@@ -102,9 +95,6 @@ passport_1.default.use(new LocalStrategy(function verify(username, password, don
     });
 }));
 app.use(passport_1.default.initialize());
-// app.use(passport.session());
-// app.use(passport.authenticate("session"));
-//
 //set cors header
 app.use(cors({
     origin: "http://localhost:3000",
@@ -115,10 +105,7 @@ app.use(function (req, res, next) {
     next();
 });
 //routes
-app.use("/", index_1.default);
-app.use("/users", users_1.default);
 app.use("/posts", posts_1.default);
-//app.use("/posts/:postId/comments", commentsRouter);
 app.use("/sign-in", sign_in_1.default);
 app.use("/sign-up", sign_up_1.default);
 app.use("/dashboard", dashboard_1.default);
@@ -132,6 +119,5 @@ app.use(function (err, req, res, next) {
     res.locals.error = req.app.get("env") === "development" ? err : {};
     // render the error page
     res.status(err.status || 500);
-    //res.render("error");
 });
 module.exports = app;

@@ -21,7 +21,7 @@ router.post(
       res.json({ message: "sign up failed", errors: errors });
     } else {
       //no validation errors
-      console.log(req.body);
+
       bcrypt.hash(req.body.password, 10, function (err, hash) {
         //check err
         if (err) {
@@ -31,10 +31,10 @@ router.post(
           username: req.body.username,
           password: hash,
         };
-        console.log(userDetails);
+
         let newUser = new User(userDetails);
         //save user to database
-        console.log(newUser);
+
         newUser.save((err) => {
           if (err) {
             return next(err);

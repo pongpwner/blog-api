@@ -20,7 +20,6 @@ router.post("/", (0, express_validator_1.body)("username")
     }
     else {
         //no validation errors
-        console.log(req.body);
         bcrypt_1.default.hash(req.body.password, 10, function (err, hash) {
             //check err
             if (err) {
@@ -30,10 +29,8 @@ router.post("/", (0, express_validator_1.body)("username")
                 username: req.body.username,
                 password: hash,
             };
-            console.log(userDetails);
             let newUser = new User_1.User(userDetails);
             //save user to database
-            console.log(newUser);
             newUser.save((err) => {
                 if (err) {
                     return next(err);

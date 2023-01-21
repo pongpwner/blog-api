@@ -21,10 +21,7 @@ router.post("/", (0, express_validator_1.body)("username")
     }
     else {
         //no errors
-        console.log("try to sign in");
         passport_1.default.authenticate("local", {
-            // successRedirect: "/",
-            // failureRedirect: "/login",
             session: false,
         }, (err, user, info) => {
             if (err || !user) {
@@ -33,12 +30,10 @@ router.post("/", (0, express_validator_1.body)("username")
                     user: user,
                 });
             }
-            console.log("1");
             req.login(user, { session: false }, (err) => {
                 if (err) {
                     res.send(err);
                 }
-                console.log("2");
                 // generate a signed son web token with the contents of user object and return it in the response
                 const token = jsonwebtoken_1.default.sign(user.toJSON(), "secret", {
                     expiresIn: "1d",
