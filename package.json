@@ -2,14 +2,18 @@
   "name": "blog-api",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": ">=16.13.1"
+  },
   "scripts": {
     "build": "npx tsc",
-    "start": "node --trace-warnings ./bin/www",
+    "start": "SET NODE_ENV=production & node ./bin/www",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q ./.bin/www.js\""
   },
   "dependencies": {
     "@types/passport-jwt": "^3.0.8",
     "bcrypt": "^5.1.0",
+    "compression": "^1.7.4",
     "concurrently": "^7.6.0",
     "connect-mongo": "^4.6.0",
     "cookie-parser": "~1.4.4",
@@ -20,6 +24,7 @@
     "express": "~4.16.1",
     "express-session": "^1.17.3",
     "express-validator": "^6.14.2",
+    "helmet": "^6.0.1",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.8.1",

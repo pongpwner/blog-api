@@ -4,6 +4,9 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 const mongoose = require("mongoose");
+const catalogRouter = require("./routes/catalog"); // Import routes for "catalog" area of site
+const compression = require("compression");
+const helmet = require("helmet");
 import postsRouter from "./routes/posts";
 import signInRouter from "./routes/sign-in";
 import signUpRouter from "./routes/sign-up";
@@ -26,6 +29,8 @@ mongoose.connect(process.env.DB_KEY, {
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
 var app = express();
+//protection against common vulnerabilities
+app.use(helmet());
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -127,7 +132,7 @@ app.use(function (req, res, next) {
 });
 
 //routes
-
+app.use(compression()); // Compress all routes
 app.use("/posts", postsRouter);
 app.use("/sign-in", signInRouter);
 app.use("/sign-up", signUpRouter);
