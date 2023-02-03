@@ -4,8 +4,8 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 const mongoose = require("mongoose");
-import indexRouter from "./routes/index";
-import usersRouter from "./routes/users";
+// import indexRouter from "./routes/index";
+// import usersRouter from "./routes/users";
 import postsRouter from "./routes/posts";
 import signInRouter from "./routes/sign-in";
 import signUpRouter from "./routes/sign-up";
@@ -132,14 +132,9 @@ app.use(passport.initialize());
 // }
 app.use(cors());
 
-// app.use(function (req, res, next) {
-//   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-//   next();
-// });
-
 //routes
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
+// app.use("/", indexRouter);
+// app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
 //app.use("/posts/:postId/comments", commentsRouter);
 app.use("/sign-in", signInRouter);

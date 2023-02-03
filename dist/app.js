@@ -9,8 +9,8 @@ const path_1 = __importDefault(require("path"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const morgan_1 = __importDefault(require("morgan"));
 const mongoose = require("mongoose");
-const compression = require("compression");
-const helmet = require("helmet");
+// import indexRouter from "./routes/index";
+// import usersRouter from "./routes/users";
 const posts_1 = __importDefault(require("./routes/posts"));
 const sign_in_1 = __importDefault(require("./routes/sign-in"));
 const sign_up_1 = __importDefault(require("./routes/sign-up"));
@@ -21,7 +21,8 @@ const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
 var JwtStrategy = require("passport-jwt").Strategy, ExtractJwt = require("passport-jwt").ExtractJwt;
 const User_1 = require("./models/User");
-require("dotenv").config({ path: __dirname + "/../.env" });
+require("dotenv").config();
+console.log(process.env.DB_KEY);
 //set up database
 mongoose.connect(process.env.DB_KEY, {
     useUnifiedTopology: true,
@@ -30,8 +31,6 @@ mongoose.connect(process.env.DB_KEY, {
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
 var app = (0, express_1.default)();
-//protection against common vulnerabilities
-app.use(helmet());
 // view engine setup
 app.set("views", path_1.default.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -44,19 +43,22 @@ app.use(express_1.default.static(path_1.default.join(__dirname, "public")));
 var opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: "secret",
+    // issuer: "accounts.examplesoft.com",
+    // audience: "yoursite.net",
 };
 passport_1.default.use(new JwtStrategy(opts, function (jwt_payload, done) {
+    console.log("passprt jwt");
     User_1.User.findOne({ id: jwt_payload.sub }, function (err, user) {
         if (err) {
-            //error
+            console.log("1");
             return done(err, false);
         }
         if (user) {
-            // found user
+            console.log("success");
             return done(null, user);
         }
         else {
-            //no user found
+            console.log("3");
             return done(null, false);
             // or you could create a new account
         }
@@ -78,6 +80,7 @@ passport_1.default.deserializeUser((id, done) => {
 // passprt.authenticate calls this callback
 //done calls serializeUser
 passport_1.default.use(new LocalStrategy(function verify(username, password, done) {
+    console.log("verify");
     User_1.User.findOne({ username: username }, (err, user) => {
         if (err) {
             return done(err);
@@ -88,6 +91,7 @@ passport_1.default.use(new LocalStrategy(function verify(username, password, don
         bcrypt.compare(password, user.password, (err, res) => {
             if (res) {
                 // passwords match! log user in
+                console.log("user log in from verify");
                 return done(null, user);
             }
             else {
@@ -98,18 +102,20 @@ passport_1.default.use(new LocalStrategy(function verify(username, password, don
     });
 }));
 app.use(passport_1.default.initialize());
+// app.use(passport.session());
+// app.use(passport.authenticate("session"));
+//
 //set cors header
-app.use(cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-}));
-app.use(function (req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", process.env.CORS);
-    next();
-});
+// {
+//   origin: "http://localhost:3000",
+//   credentials: true,
+// }
+app.use(cors());
 //routes
-app.use(compression()); // Compress all routes
+// app.use("/", indexRouter);
+// app.use("/users", usersRouter);
 app.use("/posts", posts_1.default);
+//app.use("/posts/:postId/comments", commentsRouter);
 app.use("/sign-in", sign_in_1.default);
 app.use("/sign-up", sign_up_1.default);
 app.use("/dashboard", dashboard_1.default);
@@ -123,5 +129,6 @@ app.use(function (err, req, res, next) {
     res.locals.error = req.app.get("env") === "development" ? err : {};
     // render the error page
     res.status(err.status || 500);
+    //res.render("error");
 });
 module.exports = app;
