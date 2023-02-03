@@ -100,7 +100,7 @@ app.use(passport_1.default.initialize());
 //   origin: "http://localhost:3000",
 //   credentials: true,
 // }
-app.use(cors());
+app.use(cors({ credentials: false }));
 // app.use(function (req, res, next) {
 //   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
 //   next();
