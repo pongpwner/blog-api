@@ -4,8 +4,8 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 const mongoose = require("mongoose");
-const compression = require("compression");
-const helmet = require("helmet");
+import indexRouter from "./routes/index";
+import usersRouter from "./routes/users";
 import postsRouter from "./routes/posts";
 import signInRouter from "./routes/sign-in";
 import signUpRouter from "./routes/sign-up";
@@ -18,8 +18,9 @@ var JwtStrategy = require("passport-jwt").Strategy,
   ExtractJwt = require("passport-jwt").ExtractJwt;
 import { User, IUser } from "./models/User";
 import { StrategyOptions, VerifiedCallback } from "passport-jwt";
-require("dotenv").config({ path: __dirname + "/../.env" });
+require("dotenv").config();
 
+console.log(process.env.DB_KEY);
 //set up database
 mongoose.connect(process.env.DB_KEY, {
   useUnifiedTopology: true,
@@ -28,8 +29,6 @@ mongoose.connect(process.env.DB_KEY, {
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
 var app = express();
-//protection against common vulnerabilities
-app.use(helmet());
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -46,20 +45,23 @@ app.use(express.static(path.join(__dirname, "public")));
 var opts: StrategyOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: "secret",
+  // issuer: "accounts.examplesoft.com",
+  // audience: "yoursite.net",
 };
 
 passport.use(
   new JwtStrategy(opts, function (jwt_payload: any, done: VerifiedCallback) {
+    console.log("passprt jwt");
     User.findOne({ id: jwt_payload.sub }, function (err: Error, user: IUser) {
       if (err) {
-        //error
+        console.log("1");
         return done(err, false);
       }
       if (user) {
-        // found user
+        console.log("success");
         return done(null, user);
       } else {
-        //no user found
+        console.log("3");
         return done(null, false);
         // or you could create a new account
       }
@@ -93,6 +95,7 @@ passport.use(
     password: string,
     done: Function
   ) {
+    console.log("verify");
     User.findOne({ username: username }, (err: Error, user: IUser) => {
       if (err) {
         return done(err);
@@ -104,7 +107,7 @@ passport.use(
       bcrypt.compare(password, user.password, (err: Error, res: Object) => {
         if (res) {
           // passwords match! log user in
-
+          console.log("user log in from verify");
           return done(null, user);
         } else {
           // passwords do not match!
@@ -118,21 +121,27 @@ passport.use(
 
 app.use(passport.initialize());
 
+// app.use(passport.session());
+
+// app.use(passport.authenticate("session"));
+//
 //set cors header
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-  })
-);
-app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", process.env.CORS!);
-  next();
-});
+// {
+//   origin: "http://localhost:3000",
+//   credentials: true,
+// }
+app.use(cors());
+
+// app.use(function (req, res, next) {
+//   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+//   next();
+// });
 
 //routes
-app.use(compression()); // Compress all routes
+app.use("/", indexRouter);
+app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
+//app.use("/posts/:postId/comments", commentsRouter);
 app.use("/sign-in", signInRouter);
 app.use("/sign-up", signUpRouter);
 app.use("/dashboard", dashboardRouter);
@@ -158,6 +167,7 @@ app.use(function (
 
   // render the error page
   res.status(err.status || 500);
+  //res.render("error");
 });
 
 module.exports = app;
