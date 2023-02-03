@@ -4,8 +4,6 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 const mongoose = require("mongoose");
-// import indexRouter from "./routes/index";
-// import usersRouter from "./routes/users";
 import postsRouter from "./routes/posts";
 import signInRouter from "./routes/sign-in";
 import signUpRouter from "./routes/sign-up";
@@ -45,23 +43,20 @@ app.use(express.static(path.join(__dirname, "public")));
 var opts: StrategyOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: "secret",
-  // issuer: "accounts.examplesoft.com",
-  // audience: "yoursite.net",
 };
 
 passport.use(
   new JwtStrategy(opts, function (jwt_payload: any, done: VerifiedCallback) {
-    console.log("passprt jwt");
     User.findOne({ id: jwt_payload.sub }, function (err: Error, user: IUser) {
       if (err) {
-        console.log("1");
+        //error
         return done(err, false);
       }
       if (user) {
-        console.log("success");
+        // found user
         return done(null, user);
       } else {
-        console.log("3");
+        //no user found
         return done(null, false);
         // or you could create a new account
       }
@@ -95,7 +90,6 @@ passport.use(
     password: string,
     done: Function
   ) {
-    console.log("verify");
     User.findOne({ username: username }, (err: Error, user: IUser) => {
       if (err) {
         return done(err);
@@ -107,7 +101,7 @@ passport.use(
       bcrypt.compare(password, user.password, (err: Error, res: Object) => {
         if (res) {
           // passwords match! log user in
-          console.log("user log in from verify");
+
           return done(null, user);
         } else {
           // passwords do not match!
@@ -121,22 +115,20 @@ passport.use(
 
 app.use(passport.initialize());
 
-// app.use(passport.session());
-
-// app.use(passport.authenticate("session"));
-//
 //set cors header
-// {
+//{
 //   origin: "http://localhost:3000",
 //   credentials: true,
 // }
 app.use(cors());
+// app.use(function (req, res, next) {
+//   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+//   next();
+// });
 
 //routes
-// app.use("/", indexRouter);
-// app.use("/users", usersRouter);
+
 app.use("/posts", postsRouter);
-//app.use("/posts/:postId/comments", commentsRouter);
 app.use("/sign-in", signInRouter);
 app.use("/sign-up", signUpRouter);
 app.use("/dashboard", dashboardRouter);
@@ -162,7 +154,6 @@ app.use(function (
 
   // render the error page
   res.status(err.status || 500);
-  //res.render("error");
 });
 
 module.exports = app;
