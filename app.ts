@@ -130,31 +130,41 @@ app.use(
 //   })
 // );
 
-// app.use(function (req, res, next) {
-//   const allowedOrigins = [
-//     "https://bucolic-torte-a82b04.netlify.app",
-//     "https://golden-queijadas-e8ee48.netlify.app",
-//   ];
-//   const origin: string = req.headers.origin!;
-//   if (allowedOrigins.includes(origin)) {
-//     cors({
-//       origin: origin,
-//       credentials: true,
-//     });
-//     res.setHeader("Access-Control-Allow-Origin", origin);
-//   }
-//   next();
-// });
-
-var corsOptions = {
-  origin: [
+app.use(function (req, res, next) {
+  const allowedOrigins = [
     "https://bucolic-torte-a82b04.netlify.app",
     "https://golden-queijadas-e8ee48.netlify.app",
-  ],
-  optionsSuccessStatus: 200, // For legacy browser support
-};
+  ];
+  const origin: string = req.headers.origin!;
+  if (allowedOrigins.includes(origin)) {
+    cors({
+      origin: origin,
+      credentials: true,
+    });
+  }
+  next();
+});
 
-app.use(cors(corsOptions));
+app.use(function (req, res, next) {
+  const allowedOrigins = [
+    "https://bucolic-torte-a82b04.netlify.app",
+    "https://golden-queijadas-e8ee48.netlify.app",
+  ];
+  const origin: string = req.headers.origin!;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
+  next();
+});
+// var corsOptions = {
+//   origin: [
+//     "https://bucolic-torte-a82b04.netlify.app",
+//     "https://golden-queijadas-e8ee48.netlify.app",
+//   ],
+//   optionsSuccessStatus: 200, // For legacy browser support
+// };
+
+// app.use(cors(corsOptions));
 //routes
 
 app.use("/posts", postsRouter);
