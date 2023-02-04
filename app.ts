@@ -119,7 +119,7 @@ app.use(passport.initialize());
 
 app.use(
   cors({
-    origin: "https://golden-queijadas-e8ee48.netlify.app/",
+    origin: "https://golden-queijadas-e8ee48.netlify.app",
     credentials: true,
   })
 );

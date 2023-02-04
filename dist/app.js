@@ -97,7 +97,7 @@ passport_1.default.use(new LocalStrategy(function verify(username, password, don
 app.use(passport_1.default.initialize());
 //set cors header
 app.use(cors({
-    origin: "https://golden-queijadas-e8ee48.netlify.app/",
+    origin: "https://golden-queijadas-e8ee48.netlify.app",
     credentials: true,
 }));
 app.use(function (req, res, next) {
