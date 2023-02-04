@@ -100,10 +100,12 @@ app.use(cors({
     origin: "https://golden-queijadas-e8ee48.netlify.app",
     credentials: true,
 }));
-app.use(cors({
-    origin: "https://bucolic-torte-a82b04.netlify.app",
-    credentials: true,
-}));
+// app.use(
+//   cors({
+//     origin: "https://bucolic-torte-a82b04.netlify.app",
+//     credentials: true,
+//   })
+// );
 app.use(function (req, res, next) {
     const allowedOrigins = [
         "https://bucolic-torte-a82b04.netlify.app",
@@ -111,6 +113,10 @@ app.use(function (req, res, next) {
     ];
     const origin = req.headers.origin;
     if (allowedOrigins.includes(origin)) {
+        cors({
+            origin: origin,
+            credentials: true,
+        });
         res.setHeader("Access-Control-Allow-Origin", origin);
     }
     next();
