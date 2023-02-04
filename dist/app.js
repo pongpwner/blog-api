@@ -96,11 +96,21 @@ passport_1.default.use(new LocalStrategy(function verify(username, password, don
 }));
 app.use(passport_1.default.initialize());
 //set cors header
-//{
+// {
 //   origin: "http://localhost:3000",
 //   credentials: true,
 // }
-app.use(cors({ credentials: false }));
+app.use(cors());
+app.use(function (req, res, next) {
+    const allowedOrigins = [
+        "https://bucolic-torte-a82b04.netlify.app/",
+        "https://golden-queijadas-e8ee48.netlify.app/",
+    ];
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader("Access-Control-Allow-Origin", origin);
+    }
+});
 // app.use(function (req, res, next) {
 //   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
 //   next();
