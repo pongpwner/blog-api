@@ -125,8 +125,8 @@ app.use(
 );
 app.use(function (req, res, next) {
   const allowedOrigins = [
-    "https://bucolic-torte-a82b04.netlify.app/",
-    "https://golden-queijadas-e8ee48.netlify.app/",
+    "https://bucolic-torte-a82b04.netlify.app",
+    "https://golden-queijadas-e8ee48.netlify.app",
   ];
   const origin: string = req.headers.origin!;
   if (allowedOrigins.includes(origin)) {
