@@ -119,10 +119,13 @@ app.use(passport.initialize());
 
 app.use(
   cors({
-    origin: [
-      "https://bucolic-torte-a82b04.netlify.app",
-      "https://golden-queijadas-e8ee48.netlify.app",
-    ],
+    origin: "https://golden-queijadas-e8ee48.netlify.app",
+    credentials: true,
+  })
+);
+app.use(
+  cors({
+    origin: "https://bucolic-torte-a82b04.netlify.app",
     credentials: true,
   })
 );
