@@ -130,20 +130,20 @@ app.use(passport.initialize());
 //   })
 // );
 
-// app.use(function (req, res, next) {
-//   const allowedOrigins = [
-//     "https://bucolic-torte-a82b04.netlify.app",
-//     "https://golden-queijadas-e8ee48.netlify.app",
-//   ];
-//   const origin: string = req.headers.origin!;
-//   if (allowedOrigins.includes(origin)) {
-//     cors({
-//       origin: origin,
-//       credentials: true,
-//     });
-//   }
-//   next();
-// });
+app.use(function (req, res, next) {
+  const allowedOrigins = [
+    "https://bucolic-torte-a82b04.netlify.app",
+    "https://golden-queijadas-e8ee48.netlify.app",
+  ];
+  const origin: string = req.headers.origin!;
+  if (allowedOrigins.includes(origin)) {
+    cors({
+      origin: origin,
+      credentials: true,
+    });
+  }
+  next();
+});
 
 // var corsOptions = {
 //   origin: [
@@ -153,32 +153,32 @@ app.use(passport.initialize());
 //   optionsSuccessStatus: 200, // For legacy browser support
 // };
 
-app.use(function (req, res, next) {
-  if (req.headers.origin === "https://bucolic-torte-a82b04.netlify.app") {
-    cors({
-      origin: "https://bucolic-torte-a82b04.netlify.app",
-      optionsSuccessStatus: 200,
-    });
-    res.setHeader(
-      "Access-Control-Allow-Origin",
-      "https://bucolic-torte-a82b04.netlify.app"
-    );
-    next();
-  } else if (
-    req.headers.origin === "https://golden-queijadas-e8ee48.netlify.app"
-  ) {
-    cors({
-      origin: "https://golden-queijadas-e8ee48.netlify.app",
-      optionsSuccessStatus: 200,
-    });
-    res.setHeader(
-      "Access-Control-Allow-Origin",
-      "https://golden-queijadas-e8ee48.netlify.app"
-    );
-    next();
-  }
-  next();
-});
+// app.use(function (req, res, next) {
+//   if (req.headers.origin === "https://bucolic-torte-a82b04.netlify.app") {
+//     cors({
+//       origin: "https://bucolic-torte-a82b04.netlify.app",
+//       optionsSuccessStatus: 200,
+//     });
+//     res.setHeader(
+//       "Access-Control-Allow-Origin",
+//       "https://bucolic-torte-a82b04.netlify.app"
+//     );
+//     next();
+//   } else if (
+//     req.headers.origin === "https://golden-queijadas-e8ee48.netlify.app"
+//   ) {
+//     cors({
+//       origin: "https://golden-queijadas-e8ee48.netlify.app",
+//       optionsSuccessStatus: 200,
+//     });
+//     res.setHeader(
+//       "Access-Control-Allow-Origin",
+//       "https://golden-queijadas-e8ee48.netlify.app"
+//     );
+//     next();
+//   }
+//   next();
+// });
 // app.use(function (req, res, next) {
 //   const allowedOrigins = [
 //     "https://bucolic-torte-a82b04.netlify.app",
