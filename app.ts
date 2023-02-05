@@ -152,9 +152,7 @@ app.use(passport.initialize());
 //   ],
 //   optionsSuccessStatus: 200, // For legacy browser support
 // };
-app.use(function (req, res, next) {
-  res.json({ origin: req.headers.origin });
-});
+
 app.use(function (req, res, next) {
   if (req.headers.origin === "https://bucolic-torte-a82b04.netlify.app") {
     cors({
@@ -165,7 +163,7 @@ app.use(function (req, res, next) {
       "Access-Control-Allow-Origin",
       "https://bucolic-torte-a82b04.netlify.app"
     );
-    return next();
+    next();
   } else if (
     req.headers.origin === "https://golden-queijadas-e8ee48.netlify.app"
   ) {
@@ -177,7 +175,7 @@ app.use(function (req, res, next) {
       "Access-Control-Allow-Origin",
       "https://golden-queijadas-e8ee48.netlify.app"
     );
-    return next();
+    next();
   }
   next();
 });
