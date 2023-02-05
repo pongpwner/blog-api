@@ -122,17 +122,6 @@ app.use(passport_1.default.initialize());
 //   }
 //   next();
 // });
-// app.use(function (req, res, next) {
-//   const allowedOrigins = [
-//     "https://bucolic-torte-a82b04.netlify.app",
-//     "https://golden-queijadas-e8ee48.netlify.app",
-//   ];
-//   const origin: string = req.headers.origin!;
-//   if (allowedOrigins.includes(origin)) {
-//     res.setHeader("Access-Control-Allow-Origin", origin);
-//   }
-//   next();
-// });
 var corsOptions = {
     origin: [
         "https://bucolic-torte-a82b04.netlify.app",
@@ -140,26 +129,36 @@ var corsOptions = {
     ],
     optionsSuccessStatus: 200, // For legacy browser support
 };
-// app.use(function (req, res, next) {
-//   if (req.headers.origin === "https://bucolic-torte-a82b04.netlify.app") {
-//     cors({
-//       origin: "https://bucolic-torte-a82b04.netlify.app",
-//       optionsSuccessStatus: 200,
-//     });
-//     return next();
-//   } else if (
-//     req.headers.origin === "https://golden-queijadas-e8ee48.netlify.app"
-//   ) {
-//     cors({
-//       origin: "https://golden-queijadas-e8ee48.netlify.app",
-//       optionsSuccessStatus: 200,
-//     });
-//     return next();
-//   }
-//   next();
-// });
-app.options("*", cors(corsOptions));
-app.use(cors(corsOptions));
+app.use(function (req, res, next) {
+    if (req.headers.origin === "https://bucolic-torte-a82b04.netlify.app") {
+        cors({
+            origin: "https://bucolic-torte-a82b04.netlify.app",
+            optionsSuccessStatus: 200,
+        });
+        return next();
+    }
+    else if (req.headers.origin === "https://golden-queijadas-e8ee48.netlify.app") {
+        cors({
+            origin: "https://golden-queijadas-e8ee48.netlify.app",
+            optionsSuccessStatus: 200,
+        });
+        return next();
+    }
+    next();
+});
+app.use(function (req, res, next) {
+    const allowedOrigins = [
+        "https://bucolic-torte-a82b04.netlify.app",
+        "https://golden-queijadas-e8ee48.netlify.app",
+    ];
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader("Access-Control-Allow-Origin", origin);
+    }
+    next();
+});
+// app.options("*", cors(corsOptions));
+// app.use(cors(corsOptions));
 //routes
 app.use("/posts", posts_1.default);
 app.use("/sign-in", sign_in_1.default);
