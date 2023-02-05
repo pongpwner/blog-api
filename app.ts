@@ -179,17 +179,17 @@ app.use(function (req, res, next) {
 //   }
 //   next();
 // });
-// app.use(function (req, res, next) {
-//   const allowedOrigins = [
-//     "https://bucolic-torte-a82b04.netlify.app",
-//     "https://golden-queijadas-e8ee48.netlify.app",
-//   ];
-//   const origin: string = req.headers.origin!;
-//   if (allowedOrigins.includes(origin)) {
-//     res.setHeader("Access-Control-Allow-Origin", origin);
-//   }
-//   next();
-// });
+app.use(function (req, res, next) {
+  const allowedOrigins = [
+    "https://bucolic-torte-a82b04.netlify.app",
+    "https://golden-queijadas-e8ee48.netlify.app",
+  ];
+  const origin: string = req.headers.origin!;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
+  next();
+});
 // app.options("*", cors(corsOptions));
 // app.use(cors(corsOptions));
 //routes
