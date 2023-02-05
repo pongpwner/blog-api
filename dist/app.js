@@ -146,13 +146,15 @@ app.use(function (req, res, next) {
         });
         return next();
     }
-    else if (req.headers.origin === "https://golden-queijadas-e8ee48.netlify.app") {
-        cors({
-            origin: "https://golden-queijadas-e8ee48.netlify.app",
-            optionsSuccessStatus: 200,
-        });
-        return next();
-    }
+    // else if (
+    //   req.headers.origin === "https://golden-queijadas-e8ee48.netlify.app"
+    // ) {
+    //   cors({
+    //     origin: "https://golden-queijadas-e8ee48.netlify.app",
+    //     optionsSuccessStatus: 200,
+    //   });
+    //   return next();
+    // }
     next();
 });
 // app.options("*", cors(corsOptions));
