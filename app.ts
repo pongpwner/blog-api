@@ -202,7 +202,7 @@ app.use(passport.initialize());
 // });
 // app.options("*", cors(corsOptions));
 // app.use(cors(corsOptions));
-
+app.options("*", cors());
 var whitelist = [
   "https://bucolic-torte-a82b04.netlify.app",
   "https://golden-queijadas-e8ee48.netlify.app",
