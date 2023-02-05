@@ -117,12 +117,12 @@ app.use(passport.initialize());
 
 //set cors header
 
-app.use(
-  cors({
-    origin: "https://bucolic-torte-a82b04.netlify.app",
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: "https://bucolic-torte-a82b04.netlify.app",
+//     credentials: true,
+//   })
+// );
 // app.use(
 //   cors({
 //     origin: "https://bucolic-torte-a82b04.netlify.app",
@@ -202,6 +202,22 @@ app.use(
 // });
 // app.options("*", cors(corsOptions));
 // app.use(cors(corsOptions));
+
+var whitelist = [
+  "https://bucolic-torte-a82b04.netlify.app",
+  "https://golden-queijadas-e8ee48.netlify.app",
+];
+var corsOptions = {
+  origin: function (origin: string, callback: Function) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
+
+app.use(cors(corsOptions));
 
 //routes
 
