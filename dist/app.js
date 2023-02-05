@@ -210,6 +210,7 @@ app.use(cors({
         }
         return callback(null, true);
     },
+    credentials: true,
 }));
 //routes
 app.use("/posts", posts_1.default);

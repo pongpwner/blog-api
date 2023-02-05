@@ -238,6 +238,7 @@ app.use(
       }
       return callback(null, true);
     },
+    credentials: true,
   })
 );
 //routes
