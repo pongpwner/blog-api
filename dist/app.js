@@ -130,6 +130,9 @@ app.use(passport_1.default.initialize());
 //   optionsSuccessStatus: 200, // For legacy browser support
 // };
 app.use(function (req, res, next) {
+    res.json({ origin: req.headers.origin });
+});
+app.use(function (req, res, next) {
     if (req.headers.origin === "https://bucolic-torte-a82b04.netlify.app") {
         cors({
             origin: "https://bucolic-torte-a82b04.netlify.app",
