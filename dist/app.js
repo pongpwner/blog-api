@@ -106,20 +106,20 @@ app.use(cors({
 //     credentials: true,
 //   })
 // );
-app.use(function (req, res, next) {
-    const allowedOrigins = [
-        "https://bucolic-torte-a82b04.netlify.app",
-        "https://golden-queijadas-e8ee48.netlify.app",
-    ];
-    const origin = req.headers.origin;
-    if (allowedOrigins.includes(origin)) {
-        cors({
-            origin: origin,
-            credentials: true,
-        });
-    }
-    next();
-});
+// app.use(function (req, res, next) {
+//   const allowedOrigins = [
+//     "https://bucolic-torte-a82b04.netlify.app",
+//     "https://golden-queijadas-e8ee48.netlify.app",
+//   ];
+//   const origin: string = req.headers.origin!;
+//   if (allowedOrigins.includes(origin)) {
+//     cors({
+//       origin: origin,
+//       credentials: true,
+//     });
+//   }
+//   next();
+// });
 // app.use(function (req, res, next) {
 //   const allowedOrigins = [
 //     "https://bucolic-torte-a82b04.netlify.app",
