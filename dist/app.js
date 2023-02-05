@@ -191,6 +191,7 @@ var corsOptions = {
             callback(new Error("Not allowed by CORS"));
         }
     },
+    credentials: false,
 };
 app.use(cors(corsOptions));
 //routes
