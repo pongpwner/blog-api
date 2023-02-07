@@ -63,6 +63,14 @@ export const deleteComment = async function (
   await Comment.findByIdAndDelete(req.params.commentId);
   res.json({ message: "comment deleted" });
 };
+export const deletePostComments = async function (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  await Comment.deleteMany({ postId: req.params.postId });
+  res.json({ message: "comments deleted" });
+};
 
 export const updateComment = [
   body("content")

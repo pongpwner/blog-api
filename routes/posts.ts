@@ -15,6 +15,7 @@ import {
   createComment,
   getComment,
   deleteComment,
+  deletePostComments,
 } from "../controllers/commentsController";
 router.get("/", getPosts);
 
@@ -35,7 +36,7 @@ router.delete(
 
 router.get("/:postId/comments", getPostComments);
 router.post("/:postId/comments", createComment);
-
+router.delete("/:postId/comments", deletePostComments);
 router.get("/:postId/comments/:commentId", getComment);
 router.delete(
   "/:postId/comments/:commentId",
