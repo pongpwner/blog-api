@@ -36,7 +36,11 @@ router.delete(
 
 router.get("/:postId/comments", getPostComments);
 router.post("/:postId/comments", createComment);
-router.delete("/:postId/comments", deletePostComments);
+router.delete(
+  "/:postId/comments",
+  passport.authenticate("jwt", { session: false }),
+  deletePostComments
+);
 router.get("/:postId/comments/:commentId", getComment);
 router.delete(
   "/:postId/comments/:commentId",
