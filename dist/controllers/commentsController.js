@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateComment = exports.deleteComment = exports.getComment = exports.createComment = exports.getPostComments = void 0;
+exports.updateComment = exports.deletePostComments = exports.deleteComment = exports.getComment = exports.createComment = exports.getPostComments = void 0;
 const Comment_1 = __importDefault(require("../models/Comment"));
 const express_validator_1 = require("express-validator");
 const getPostComments = function (req, res, next) {
@@ -73,6 +73,13 @@ const deleteComment = function (req, res, next) {
     });
 };
 exports.deleteComment = deleteComment;
+const deletePostComments = function (req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield Comment_1.default.deleteMany({ postId: req.params.postId });
+        res.json({ message: "comments deleted" });
+    });
+};
+exports.deletePostComments = deletePostComments;
 exports.updateComment = [
     (0, express_validator_1.body)("content")
         .trim()

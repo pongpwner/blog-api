@@ -16,6 +16,7 @@ router.delete("/:postId", passport_1.default.authenticate("jwt", { session: fals
 //comments
 router.get("/:postId/comments", commentsController_1.getPostComments);
 router.post("/:postId/comments", commentsController_1.createComment);
+router.delete("/:postId/comments", passport_1.default.authenticate("jwt", { session: false }), commentsController_1.deletePostComments);
 router.get("/:postId/comments/:commentId", commentsController_1.getComment);
 router.delete("/:postId/comments/:commentId", passport_1.default.authenticate("jwt", { session: false }), commentsController_1.deleteComment);
 exports.default = router;
