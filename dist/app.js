@@ -20,7 +20,6 @@ const bcrypt = require("bcrypt");
 var JwtStrategy = require("passport-jwt").Strategy, ExtractJwt = require("passport-jwt").ExtractJwt;
 const User_1 = require("./models/User");
 require("dotenv").config();
-console.log(process.env.DB_KEY);
 //set up database
 mongoose.connect(process.env.DB_KEY, {
     useUnifiedTopology: true,
@@ -96,103 +95,6 @@ passport_1.default.use(new LocalStrategy(function verify(username, password, don
 }));
 app.use(passport_1.default.initialize());
 //set cors header
-// app.use(
-//   cors({
-//     origin: "https://bucolic-torte-a82b04.netlify.app",
-//     credentials: true,
-//   })
-// );
-// app.use(
-//   cors({
-//     origin: "https://bucolic-torte-a82b04.netlify.app",
-//     credentials: true,
-//   })
-// );
-// app.use(function (req, res, next) {
-//   const allowedOrigins = [
-//     "https://bucolic-torte-a82b04.netlify.app",
-//     "https://golden-queijadas-e8ee48.netlify.app",
-//   ];
-//   const origin: string = req.headers.origin!;
-//   if (allowedOrigins.includes(origin)) {
-//     cors({
-//       origin: origin,
-//       credentials: true,
-//     });
-//   }
-//   next();
-// });
-// var corsOptions = {
-//   origin: [
-//     "https://bucolic-torte-a82b04.netlify.app",
-//     "https://golden-queijadas-e8ee48.netlify.app",
-//   ],
-//   optionsSuccessStatus: 200, // For legacy browser support
-// };
-// app.use(function (req, res, next) {
-//   if (req.headers.origin === "https://bucolic-torte-a82b04.netlify.app") {
-//     cors({
-//       origin: "https://bucolic-torte-a82b04.netlify.app",
-//       optionsSuccessStatus: 200,
-//     });
-//     res.setHeader(
-//       "Access-Control-Allow-Origin",
-//       "https://bucolic-torte-a82b04.netlify.app"
-//     );
-//     next();
-//   } else if (
-//     req.headers.origin === "https://golden-queijadas-e8ee48.netlify.app"
-//   ) {
-//     cors({
-//       origin: "https://golden-queijadas-e8ee48.netlify.app",
-//       optionsSuccessStatus: 200,
-//     });
-//     res.setHeader(
-//       "Access-Control-Allow-Origin",
-//       "https://golden-queijadas-e8ee48.netlify.app"
-//     );
-//     next();
-//   }
-//   next();
-// });
-// app.use(function (req, res, next) {
-//   const allowedOrigins = [
-//     "https://bucolic-torte-a82b04.netlify.app",
-//     "https://golden-queijadas-e8ee48.netlify.app",
-//   ];
-//   const origin: string = req.headers.origin!;
-//   if (allowedOrigins.includes(origin)) {
-//     res.setHeader("Access-Control-Allow-Origin", origin);
-//   }
-//   res.setHeader(
-//     "Access-Control-Allow-Methods",
-//     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-//   );
-//   res.setHeader(
-//     "Access-Control-Allow-Headers",
-//     "X-Requested-With,content-type, Accept"
-//   );
-//   res.setHeader("Access-Control-Allow-Credentials", "true");
-//   next();
-// });
-// app.options("*", cors(corsOptions));
-// app.use(cors(corsOptions));
-// app.options("*", cors());
-// var whitelist = [
-//   "https://bucolic-torte-a82b04.netlify.app",
-//   "https://golden-queijadas-e8ee48.netlify.app",
-// ];
-// var corsOptions = {
-//   origin: function (origin: string, callback: Function) {
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error("Not allowed by CORS"));
-//     }
-//   },
-//   credentials: false,
-// };
-// app.use(cors(corsOptions));
 var allowedOrigins = [
     "https://bucolic-torte-a82b04.netlify.app",
     "https://golden-queijadas-e8ee48.netlify.app",
