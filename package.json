@@ -6,8 +6,7 @@
     "node": ">=16.13.1"
   },
   "scripts": {
-    "build": "run build blog-api:build:production",
-    "tsc": "npx tsc",
+    "build": "npx tsc",
     "start": "SET NODE_ENV=production & node ./bin/www",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q ./.bin/www.js\""
   },
