@@ -23,8 +23,12 @@ exports.createPost = [
     (0, express_validator_1.body)("content")
         .trim()
         .isLength({ min: 1 })
-        .withMessage("content can not be empty")
-        .escape(),
+        .withMessage("content can not be empty"),
+    (0, express_validator_1.body)("category")
+        .trim()
+        .isLength({ min: 1 })
+        .withMessage("content can not be empty"),
+    //removed.escape
     function (req, res, next) {
         const errors = (0, express_validator_1.validationResult)(req);
         if (!errors.isEmpty()) {
@@ -36,12 +40,14 @@ exports.createPost = [
             let newPost = new Post_1.default({
                 title: req.body.title,
                 content: req.body.content,
+                category: req.body.category,
                 timestamp: new Date(),
                 published: false,
             });
             newPost.save((err) => {
                 if (err)
                     return next(err);
+                console.log(newPost);
                 res.json({ message: "post created" });
             });
         }
@@ -73,8 +79,12 @@ exports.updatePost = [
     (0, express_validator_1.body)("content")
         .trim()
         .isLength({ min: 1 })
-        .withMessage("content can not be empty")
-        .escape(),
+        .withMessage("content can not be empty"),
+    (0, express_validator_1.body)("category")
+        .trim()
+        .isLength({ min: 1 })
+        .withMessage("category can not be empty"),
+    //removed .escape
     function (req, res, next) {
         const errors = (0, express_validator_1.validationResult)(req);
         if (!errors.isEmpty()) {
@@ -86,6 +96,7 @@ exports.updatePost = [
             Post_1.default.findByIdAndUpdate(req.params.postId, {
                 title: req.body.title,
                 content: req.body.content,
+                category: req.body.category,
                 published: req.body.published,
             }, (err, result) => {
                 if (err)

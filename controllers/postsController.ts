@@ -22,8 +22,12 @@ export const createPost = [
   body("content")
     .trim()
     .isLength({ min: 1 })
-    .withMessage("content can not be empty")
-    .escape(),
+    .withMessage("content can not be empty"),
+  body("category")
+    .trim()
+    .isLength({ min: 1 })
+    .withMessage("content can not be empty"),
+  //removed.escape
   function (req: Request, res: Response, next: NextFunction) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -34,11 +38,13 @@ export const createPost = [
       let newPost = new Post({
         title: req.body.title,
         content: req.body.content,
+        category: req.body.category,
         timestamp: new Date(),
         published: false,
       });
       newPost.save((err) => {
         if (err) return next(err);
+        console.log(newPost);
         res.json({ message: "post created" });
       });
     }
@@ -75,8 +81,12 @@ export const updatePost = [
   body("content")
     .trim()
     .isLength({ min: 1 })
-    .withMessage("content can not be empty")
-    .escape(),
+    .withMessage("content can not be empty"),
+  body("category")
+    .trim()
+    .isLength({ min: 1 })
+    .withMessage("category can not be empty"),
+  //removed .escape
   function (req: Request, res: Response, next: NextFunction) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -90,6 +100,7 @@ export const updatePost = [
         {
           title: req.body.title,
           content: req.body.content,
+          category: req.body.category,
           published: req.body.published,
         },
         (err: Error, result: IPost) => {

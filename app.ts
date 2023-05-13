@@ -120,6 +120,7 @@ var allowedOrigins = [
   "https://bucolic-torte-a82b04.netlify.app",
   "https://golden-queijadas-e8ee48.netlify.app",
   "http://localhost:3000",
+  "http://127.0.0.1:5173",
 ];
 app.use(
   cors({
