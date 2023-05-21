@@ -1,8 +1,8 @@
 # Blog API
 
-- [Repo](https://github.com/pongpwner/blog-front-end)
+- [Blog Front End](https://github.com/pongpwner/blog-front-end)
 - [Blog CMS](https://github.com/pongpwner/blog-cms)
-- [Blog API](https://github.com/pongpwner/blog-api)
+
 
   This an API for basic blog functions
 
